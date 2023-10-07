@@ -1,0 +1,102 @@
+<!--
+  @author            : salihcendik
+  @last modified on  : 28-09-2023
+  @last modified by  : salih.cendik
+-->
+<template>
+    <lightning-spinner if:true={showSpinner} alternative-text="Loading" size="medium"
+        variant="brand"></lightning-spinner>
+
+    <!-- Page Header Starts -->
+    <div class="slds-page-header" role="banner">
+        <div class="slds-grid slds-wrap">
+            <div class="slds-col">
+                <div class="slds-media slds-no-space slds-grow">
+                    <div class="slds-media__figure">
+                        <lightning-icon icon-name="action:manage_perm_sets" alternative-text="New"
+                            title="Stand Form"></lightning-icon>
+                    </div>
+                    <div class="slds-media__body">
+                        <p class="slds-text-title_caps">{label.header1}
+                        </p>
+                        <h1 class="slds-page-header__title slds-m-right--small slds-align-middle slds-truncate"
+                            title="">{label.header2}
+                        </h1>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-large-col_bump-left">
+                <button class="slds-button slds-button_neutral" onclick={handleSave}
+                    disabled={disabledPanel}>{labelBtnSave}</button>
+            </div>
+        </div>
+    </div>
+    <!-- Page Header Ends -->
+
+    <!-- Panel Layout Starts -->
+
+    <table
+        class="slds-table slds-table--bordered slds-table--cell-buffer slds-table slds-table_bordered slds-table_resizable-cols"
+        role="grid">
+        <thead>
+            <tr class="slds-text-title--caps" style="background: #f7f9fb">
+                <th class="slds-is-resizable" scope="col" style="width: 1px;text-align: left">
+                    <div class="slds-cell-wrap"> # </div>
+                </th>
+                <th class="slds-is-resizable" scope="col" style="text-align: left">
+                    <div class="slds-cell-wrap"> No </div>
+                </th>
+                <th class="slds-is-resizable" scope="col" style="text-align: left">
+                    <div class="slds-cell-wrap">{label.existingPanelCode}</div>
+                </th>
+                <template if:true={showSerieLayout}>
+                    <th class="slds-is-resizable" scope="col" style="text-align: left">
+                        <div class="slds-cell-wrap">{label.existingSerie}</div>
+                    </th>
+                </template>
+                <th class="slds-is-resizable" scope="col" style="width: 40%;text-align: left">
+                    <div class="slds-cell-wrap">{label.requestedPanelCode}</div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <template for:each={panels} for:item="panel">
+                <tr key={panel.index} class="hooks-table__section hooks-table__section_end">
+
+                    <!-- Row No -->
+                    <td class="slds-cell-wrap">
+                        {panel.index}
+                    </td>
+
+                    <!-- Row Name -->
+                    <td class="slds-cell-wrap">
+                        {panel.lineName}
+                    </td>
+
+                    <!-- Panel Code -->
+                    <td class="slds-cell-wrap">
+                        {panel.existingProdName}
+                    </td>
+
+                    <!-- Serie Code -->
+                    <template if:true={showSerieLayout}>
+                        <td class="slds-cell-wrap">
+                            {panel.existingSerieName}
+                        </td>
+                    </template>
+
+                    <!-- Requested Panel Code -->
+                    <td class="slds-cell-wrap" style={setReadonlyStyleForPanel}>
+                        <c-lwc-look-up input-id={panel.index} input-data-id={panel.index}
+                            input-placeholder="Search Panel" input-required="false" input-search={handlePanelSearch}
+                            input-selected-record-id={panel.requestedProdId}
+                            input-selected-label={panel.requestedProdName} input-selected-icon={panel.icon}
+                            input-additional-criteria={panelCodeSearchFilter}
+                            oninputselect={handlePanelSelect}></c-lwc-look-up>
+                    </td>
+                </tr>
+            </template>
+        </tbody>
+    </table>
+    <!-- Panel Layout Ends -->
+</template>

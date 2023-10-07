@@ -1,0 +1,14 @@
+<!--
+  @author            : salihcendik
+  @last modified on  : 07-03-2023
+  @last modified by  : salihcendik
+-->
+<aura:component implements="force:lightningQuickAction,force:hasRecordId">
+    <aura:html tag="style">
+        .cuf-content { padding: 0 0rem !important; } .slds-p-around--medium {
+        padding: 0rem !important; } .slds-modal__content{ height:unset !important;
+        max-height:unset !important; } .slds-modal__container{ max-width:80rem
+        !important; width:80% !important; }
+    </aura:html>
+    <c:changePanelsForStand recordId="{!v.recordId}" onclose="{!c.closeQA}"></c:changePanelsForStand>
+</aura:component>
